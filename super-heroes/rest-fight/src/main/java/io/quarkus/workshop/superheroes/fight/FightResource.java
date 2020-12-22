@@ -1,5 +1,8 @@
 package io.quarkus.workshop.superheroes.fight;
 
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -35,6 +38,8 @@ public class FightResource {
 
     @Operation(summary = "Returns two random fighters")
     @APIResponse(responseCode = "200", content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Fighters.class, required = true)))
+    @Counted(name = "countHerosTaken", description = "Counts how many times the a hero and a villain has been called")
+    @Timed(name = "timeGetRandomFighters", description = "Times how long it takes to invoke the findRandomFighters method", unit = MetricUnits.MILLISECONDS)
     @GET
     @Path("/randomfighters")
     public Response getRandomFighters() throws InterruptedException {

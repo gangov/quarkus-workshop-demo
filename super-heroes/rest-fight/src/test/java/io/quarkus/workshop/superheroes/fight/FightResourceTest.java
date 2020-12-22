@@ -3,6 +3,8 @@ package io.quarkus.workshop.superheroes.fight;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.workshop.superheroes.fight.client.Hero;
+import io.quarkus.workshop.superheroes.fight.client.MockHeroService;
+import io.quarkus.workshop.superheroes.fight.client.MockVillainService;
 import io.quarkus.workshop.superheroes.fight.client.Villain;
 import io.restassured.common.mapper.TypeRef;
 import org.hamcrest.core.Is;
@@ -97,6 +99,22 @@ public class FightResourceTest {
             .then()
             .statusCode(BAD_REQUEST.getStatusCode());
     }
+
+    @Test
+    void shouldGetRandomFighters() {
+        given()
+            .when().get("/api/fights/randomfighters")
+            .then()
+            .statusCode(OK.getStatusCode())
+            .header(CONTENT_TYPE, APPLICATION_JSON)
+            .body("hero.name", Is.is(MockHeroService.DEFAULT_HERO_NAME))
+            .body("hero.picture", Is.is(MockHeroService.DEFAULT_HERO_PICTURE))
+            .body("hero.level", Is.is(MockHeroService.DEFAULT_HERO_LEVEL))
+            .body("villain.name", Is.is(MockVillainService.DEFAULT_VILLAIN_NAME))
+            .body("villain.picture", Is.is(MockVillainService.DEFAULT_VILLAIN_PICTURE))
+            .body("villain.level", Is.is(MockVillainService.DEFAULT_VILLAIN_LEVEL));
+    }
+
 
     @Test
     @Order(1)

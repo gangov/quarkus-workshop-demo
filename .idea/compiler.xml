@@ -56,10 +56,12 @@
         <module name="rest-fight" />
         <module name="rest-hero" />
         <module name="ui-super-heroes" />
+        <module name="event-statistics" />
         <module name="load-super-heroes" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="event-statistics" target="11" />
       <module name="extension-fault-injector" target="1.8" />
       <module name="extension-fault-injector-deployment" target="1.8" />
       <module name="extension-fault-injector-parent" target="1.8" />
